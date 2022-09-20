@@ -1,0 +1,6 @@
+﻿  source.cpp
+C:\Users\harun\Downloads\L2L_I2GA_CPP - コピー (2)-20220917T075753Z-001\L2L_I2GA_CPP - コピー (2)\L2L_I2GA\Eigen\src\Core\arch\Default\Half.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\harun\Downloads\L2L_I2GA_CPP - コピー (2)-20220917T075753Z-001\L2L_I2GA_CPP - コピー (2)\L2L_I2GA\Eigen\src\Core\arch\Default\BFloat16.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\harun\Downloads\L2L_I2GA_CPP - コピー (2)-20220917T075753Z-001\L2L_I2GA_CPP - コピー (2)\L2L_I2GA\Eigen\src\Core\arch\Default\GenericPacketMathFunctions.h(676,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+C:\Users\harun\Downloads\L2L_I2GA_CPP - コピー (2)-20220917T075753Z-001\L2L_I2GA_CPP - コピー (2)\L2L_I2GA\source.cpp(48,12): warning C4101: 'ref_E': ローカル変数は 1 度も使われていません。
+  L2L_I2GA.vcxproj -> C:\Users\harun\Downloads\L2L_I2GA_CPP - コピー (2)-20220917T075753Z-001\L2L_I2GA_CPP - コピー (2)\Debug\L2L_I2GA.exe
