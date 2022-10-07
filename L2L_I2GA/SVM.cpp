@@ -10,8 +10,6 @@
 #include <random>
 using namespace Eigen;
 GeneralizedSelfAdjointEigenSolver<MatrixXd> ges;
-VectorXd D;
-double E;
 
 std::random_device Rd;
 std::default_random_engine eng2(Rd());
@@ -22,12 +20,12 @@ std::uniform_real_distribution<double> distr2(0.0, 1.0);
 SVM::SVM() : me()
 {
 	bmax = 10;
-	int ndb = 100;
+	int ndb = 200;
 	Hmatrix = MatrixXd::Zero(ndb, ndb);
 	Nmatrix = MatrixXd::Zero(ndb, ndb);
 }
 //=============================================================================
-int SVM::CheckOverlap(vector<Vector3d>& Basis)
+int SVM::CheckOverlap(vector<Vector3d>Basis)
 {
 	int itr = Basis.size() - 1;
 	float vnorm, vdotv;
@@ -45,30 +43,21 @@ int SVM::CheckOverlap(vector<Vector3d>& Basis)
 	return 1;
 }
 //=============================================================================
-double EigenValuesEquation(int itr, VectorXd D, VectorXd q, double aa, double xx)
+double EigenValuesEquation(int itr,VectorXd D, VectorXd q, double aa, double xx)
 {
-	double vv = 1;
-	double ww = 1;
 	double yy = 0;
 	double zz = 0;
 
 	for (int n1 = 0; n1 < itr; n1++)
 	{
-		vv = vv * (D(n1) - xx);
-		ww = 1;
-		for (int n2 = 0; n2 < itr; n2++)
-		{
-			if (n2 != n1) ww = ww * (D(n2) - xx);
-		}
-		yy = yy + q(n1) * q(n1) * ww;
-
+		yy = yy + q(n1) * q(n1) / (xx - D(n1));
 	}
-	zz = (aa - xx) * vv - yy;
+	zz = xx - aa - yy;
 
 	return zz;
 }
 //=============================================================================
-double SVM::NewEnergy(vector <Vector3d>& Basis, MatrixXd C, VectorXd D, double E, double EE)
+double SVM::NewEnergy()
 {
 	int itr = Basis.size() - 1;
 	
@@ -83,7 +72,7 @@ double SVM::NewEnergy(vector <Vector3d>& Basis, MatrixXd C, VectorXd D, double E
 	double e1 = E;
 	double e2 = E - abs(0.5 * (E - EE));
 	double e3 = E;
-
+	//clock_t start1 = clock();
 	vector<double> overlap_vector(itr);
 	for (int k1 = 0; k1 < itr; k1++)
 	{
@@ -102,7 +91,6 @@ double SVM::NewEnergy(vector <Vector3d>& Basis, MatrixXd C, VectorXd D, double E
 			Overlap(k1) = Overlap(k1) + C(k2, k1) * overlap_vector[k2];
 		}
 	}
-	
 	c(itr) = 1;
 	for (int k1 = 0; k1 < itr; k1++)
 	{
@@ -111,25 +99,7 @@ double SVM::NewEnergy(vector <Vector3d>& Basis, MatrixXd C, VectorXd D, double E
 			c(k1) = c(k1) - Overlap(k2) * C(k1, k2);
 		}
 	}
-	for (int k1 = 0; k1 < itr; k1++)
-	{
-		for (int k2 = 0; k2 < itr; k2++)
-		{
 
-			NN = NN + c(k1) * c(k2) * NM(k1, k2);
-		}
-	}
-	for (int k1 = 0; k1 < itr; k1++)
-	{
-		NN = NN + 2 * c(k1) * c(itr) * overlap_vector[k1];
-	}
-	NN = NN + me.overlap(Basis[itr], Basis[itr][0], Basis[itr][1], Basis[itr][2]);
-	for (int k1 = 0; k1 < itr + 1; k1++)
-	{
-		c(k1) = c(k1) / sqrt(NN);
-	}
-	//------------------------------------------------------
-	
 	VectorXd HMc=VectorXd::Zero(itr);
 	for (int k2 = 0; k2 < itr; k2++) {
 		for (int k3 = 0; k3 < itr; k3++) {
@@ -141,23 +111,18 @@ double SVM::NewEnergy(vector <Vector3d>& Basis, MatrixXd C, VectorXd D, double E
 	{
 		for (int k2 = 0; k2 < itr; k2++)
 		{
-				q(k1) = q(k1) + HMc(k2) * C(k2, k1);
-		}
-	}
-	
-	for (int k1 = 0; k1 < itr; k1++)
-	{
-		for (int k2 = 0; k2 < itr; k2++)
-		{
-			q(k1) = q(k1) + energy_vector[k2] * c(itr) * C(k2, k1);
+				q(k1) = q(k1) + (HMc(k2)+ energy_vector[k2] * c(itr)) * C(k2, k1);
+				NN = NN + c(k1) * c(k2) * NM(k1, k2);
+				aa = aa + c(k1) * c(k2) * HM(k1, k2);
 		}
 	}
 	for (int k1 = 0; k1 < itr; k1++)
 	{
-		for (int k2 = 0; k2 < itr; k2++)
-		{
-			aa = aa + c(k1) * c(k2) * HM(k1, k2);
-		}
+		NN = NN + 2 * c(k1) * c(itr) * overlap_vector[k1];
+	}
+	NN = NN + me.overlap(Basis[itr], Basis[itr][0], Basis[itr][1], Basis[itr][2]);
+	for (int k1 = 0; k1 < itr; k1++) {
+		q(k1) = q(k1) / sqrt(NN);
 	}
 
 	for (int k1 = 0; k1 < itr; k1++)
@@ -165,21 +130,22 @@ double SVM::NewEnergy(vector <Vector3d>& Basis, MatrixXd C, VectorXd D, double E
 		aa = aa + 2 * c(k1) * c(itr) * energy_vector[k1];
 	}
 	aa = aa + c(itr) * c(itr) * me.energy(Basis[itr], Basis[itr][0], Basis[itr][1], Basis[itr][2]);
-	
-	double Ee1 = EigenValuesEquation(itr, D, q, aa, e1);
-	while (count < 101)
+	aa = aa / NN;
+	while (count < 8)
 	{
-
-		if (Ee1 * EigenValuesEquation(itr, D, q, aa, e2) < 0)  break;
+		if (signbit(EigenValuesEquation(itr, D, q, aa, e2))== 1)  break;
 		else
 		{
 			e1 = e2;
+			//e2 = e2 - abs(0.5 * (E - EE));
 			e2 = e2 - abs(0.5 * (E - EE));
 			count++;
 		}
+		
 
 	}
-	if (count <= 100)
+	//cout << "count is" << count << endl;
+	if (count <= 7)
 	{
 		count = 0;
 		while (abs((e1 - e2) / e2) > abs(1e-5 * (E - EE) / EE))
@@ -192,14 +158,13 @@ double SVM::NewEnergy(vector <Vector3d>& Basis, MatrixXd C, VectorXd D, double E
 		}
 
 	}
-
 	return e3;
 	//==============================================================================
 }
 
 
 //=============================================================================
-MatrixXd SVM::NormMatrix(vector<Vector3d>& Basis)
+MatrixXd SVM::NormMatrix(vector<Vector3d>Basis)
 {
 	int itr = Basis.size();
 	MatrixXd Norm = MatrixXd::Zero(itr, itr);
@@ -215,7 +180,7 @@ MatrixXd SVM::NormMatrix(vector<Vector3d>& Basis)
 	return Norm;
 }
 //=============================================================================
-MatrixXd SVM::HamiltonianMatrix(vector<Vector3d>& Basis)
+MatrixXd SVM::HamiltonianMatrix(vector<Vector3d>Basis)
 {
 	int itr = Basis.size();
 	MatrixXd H = MatrixXd::Zero(itr, itr);
@@ -230,7 +195,7 @@ MatrixXd SVM::HamiltonianMatrix(vector<Vector3d>& Basis)
 	return H;
 }
 //=============================================================================
-void SVM::UpdateNorm(vector<Vector3d>& Basis)
+void SVM::UpdateNorm(vector<Vector3d>Basis)
 {
 	int ncur = Basis.size() - 1;
 	for (int n1 = 0; n1 <= ncur; n1++)
@@ -241,7 +206,7 @@ void SVM::UpdateNorm(vector<Vector3d>& Basis)
 	}
 }
 //=============================================================================
-void SVM::UpdateHamiltonian(vector<Vector3d>& Basis)
+void SVM::UpdateHamiltonian(vector<Vector3d>Basis)
 {
 	int ncur = Basis.size() - 1;
 	for (int n1 = 0; n1 <= ncur; n1++)

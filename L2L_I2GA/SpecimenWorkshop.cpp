@@ -25,7 +25,7 @@ double SpecimenWorkshop::MutationLikelyhoodPercent=0.2;
 double SpecimenWorkshop::Epsilon=0.01;
 
 // Generate initial population
-Specimen** SpecimenWorkshop::GeneratePopulation(vector<Vector3d>& Basis, MatrixXd C, VectorXd D, double E, double EE)
+Specimen** SpecimenWorkshop::GeneratePopulation(vector<Vector3d>Basis)
 {
 	// Creates array representing the population
 	Specimen** p = new Specimen*[PopulationSize];
@@ -36,7 +36,7 @@ Specimen** SpecimenWorkshop::GeneratePopulation(vector<Vector3d>& Basis, MatrixX
 		Mutate(p[i]);
 
 		// Calculate Energy for new specimens
-		p[i]->CalculateEnergy(Basis, C, D, E, EE);
+		p[i]->CalculateEnergy();
 	}
 	return p;
 }
@@ -62,7 +62,7 @@ Specimen** SpecimenWorkshop::first_state_GeneratePopulation()
 }
 
 // Generate population by reproduction of selection
-Specimen** SpecimenWorkshop::GeneratePopulation(Specimen** selection, vector<Vector3d>& Basis, MatrixXd C, VectorXd D, double E, double EE)
+Specimen** SpecimenWorkshop::GeneratePopulation(Specimen** selection, vector<Vector3d>Basis)
 {
 	
 	// Creates array representing the population
@@ -84,14 +84,11 @@ Specimen** SpecimenWorkshop::GeneratePopulation(Specimen** selection, vector<Vec
 	{
 		// Slect two parents randomly in way
 		// they are different instances
-		do
-		{
 			parent1_index = rand() % SelectionSize;
 			parent2_index = rand() % SelectionSize;
-		} while (parent1_index == parent2_index);
 
 		// Creates new specimen
-		p[child_index] = ReproduceNew(selection[parent1_index], selection[parent2_index], Basis, C, D, E, EE);
+		p[child_index] = ReproduceNew(selection[parent1_index], selection[parent2_index],Basis);
 
 	
 	}
@@ -117,11 +114,8 @@ Specimen** SpecimenWorkshop::first_state_GeneratePopulation(Specimen** selection
 	{
 		// Slect two parents randomly in way
 		// they are different instances
-		do
-		{
 			parent1_index = rand() % SelectionSize;
 			parent2_index = rand() % SelectionSize;
-		} while (parent1_index == parent2_index);
 
 		// Creates new specimen
 		p[child_index] = first_state_ReproduceNew(selection[parent1_index], selection[parent2_index]);
@@ -131,7 +125,7 @@ Specimen** SpecimenWorkshop::first_state_GeneratePopulation(Specimen** selection
 	return p;
 }
 // Reproduce new specimen on base of two parents
-Specimen* SpecimenWorkshop::ReproduceNew(Specimen* a, Specimen* b, vector<Vector3d>& Basis, MatrixXd C, VectorXd D, double E, double EE)
+Specimen* SpecimenWorkshop::ReproduceNew(Specimen* a, Specimen* b, vector<Vector3d>Basis)
 {
 	Specimen* s = new Specimen();
 	// Inherit genes as the average on the parents' genes
@@ -157,7 +151,7 @@ Specimen* SpecimenWorkshop::ReproduceNew(Specimen* a, Specimen* b, vector<Vector
 	}
 
 	// Calculate Energy for new specimen
-	s->CalculateEnergy(Basis, C, D, E, EE);
+	s->CalculateEnergy();
 
 	return s;
 }

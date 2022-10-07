@@ -20,13 +20,13 @@ public:
 	// Current Iteration
 	static int Current_Iteration;
 
-	void Solver::first_state_Initialize();
+	void first_state_Initialize();
 
-	static void Solver::Initialize(vector<Vector3d>& Basis, MatrixXd C, VectorXd D, double E, double EE);
+	static void Initialize(vector<Vector3d>Basis);
 	
-	Vector3d Solver::GAsolve(vector<Vector3d>& Basis, MatrixXd C, VectorXd D, double E, double EE);
+	Vector3d GAsolve(vector<Vector3d>Basis);
 
-	Vector3d Solver::first_state_GAsolve();
+	Vector3d first_state_GAsolve();
 };
 
 #endif

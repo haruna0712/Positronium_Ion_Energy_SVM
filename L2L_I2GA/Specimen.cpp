@@ -38,7 +38,7 @@ Specimen* Specimen::Clone()
 
 	return s;
 }
-void Specimen::CalculateEnergy(vector<Vector3d>& Basis, MatrixXd C, VectorXd D, double E, double EE)
+void Specimen::CalculateEnergy()
 {
 	int Bsize = Basis.size();
 	Vector3d NewState;
@@ -53,7 +53,7 @@ void Specimen::CalculateEnergy(vector<Vector3d>& Basis, MatrixXd C, VectorXd D, 
 	Basis.push_back(NewState);
 	
 	double NewE;
-	NewE = svm.NewEnergy(Basis, C, D, E, EE);
+	NewE = svm.NewEnergy();
 
 	Energy = NewE;
 	Basis.resize(Bsize);

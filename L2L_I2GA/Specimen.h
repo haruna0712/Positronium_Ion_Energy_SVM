@@ -29,7 +29,7 @@ public:
 
 	// Calculates Energy of this instance to the solution
 	// Contains the equation formula
-	void CalculateEnergy(vector<Vector3d>& Basis, MatrixXd C, VectorXd D, double E, double EE);
+	void CalculateEnergy();
 	void first_state_CalculateEnergy();
 };
 

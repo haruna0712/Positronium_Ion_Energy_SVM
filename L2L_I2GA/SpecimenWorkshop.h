@@ -29,25 +29,25 @@ public:
 	static double Epsilon;
 
 	// Generate initial population
-	static Specimen** GeneratePopulation(vector<Vector3d>& Basis, MatrixXd C, VectorXd D, double E, double EE);
+	static Specimen** GeneratePopulation(vector<Vector3d>Basis);
 
 	static Specimen** first_state_GeneratePopulation();
 	// Generate population by reproduction of selection
-	static Specimen** GeneratePopulation(Specimen** selection, vector<Vector3d>& Basis, MatrixXd C, VectorXd D, double E, double EE);
+	static Specimen** GeneratePopulation(Specimen** selection, vector<Vector3d>Basis);
 
 	static Specimen** first_state_GeneratePopulation(Specimen** selection);
 	// Reproduce new specimen on base of two parents
-	static Specimen* ReproduceNew(Specimen* a, Specimen* b, vector<Vector3d>& Basis, MatrixXd C, VectorXd D, double E, double EE);
+	static Specimen* ReproduceNew(Specimen* a, Specimen* b, vector<Vector3d>Basis);
 	
 	static Specimen* first_state_ReproduceNew(Specimen* a, Specimen* b);
 	// Select the best specimens from the population
-	static Specimen** SpecimenWorkshop::Select(Specimen** population);
+	static Specimen** Select(Specimen** population);
 
 	// Sort the population
-	static void SpecimenWorkshop::Sort(Specimen** population);
+	static void Sort(Specimen** population);
 
 	// Mutate the specimen
-	static void SpecimenWorkshop::Mutate(Specimen* sp);
+	static void Mutate(Specimen* sp);
 };
 
 #endif

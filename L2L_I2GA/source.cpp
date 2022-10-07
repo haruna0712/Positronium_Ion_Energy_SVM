@@ -20,14 +20,18 @@ using namespace std;
 
 MatrixXd NM;
 MatrixXd HM;
+MatrixXd C;
+VectorXd D;
+double E;
+double EE;
+vector<Vector3d>Basis;
 int main()
 {
-    int maxbasis = 100;
+    int maxbasis = 200;
     SVM svm;
     Solver solver;
     Vector3d NewState;
     GeneralizedSelfAdjointEigenSolver<MatrixXd> ges;
-    vector<Vector3d> Basis;
     
     solver.first_state_Initialize();
     NewState = solver.first_state_GAsolve();
@@ -41,10 +45,6 @@ int main()
 
     MatrixXd Norm;
     MatrixXd H;
-    MatrixXd C;
-    VectorXd D;
-    double E;
-    double EE;
 
     cout << "\t Start SVM iters\n\n";
     int itr = 1;
@@ -62,27 +62,22 @@ int main()
         if (itr == 1)  EE = E + abs(E / 2);
 
         printf("\t iter = %4d     E = %14.8f  \n", itr, E);
-        clock_t end1 = clock();
-        std::cout << "duration = " << (double)(end1 - start1) / CLOCKS_PER_SEC << "sec.\n";
-
         //Norm matrix
         NM = svm.Nmatrix;
         //Hamiltonian matrix
         HM = svm.Hmatrix;
-        solver.Initialize(Basis, C, D, E, EE);
-        NewState = solver.GAsolve(Basis, C, D, E, EE);
-        
+        solver.Initialize(Basis);
+        NewState = solver.GAsolve(Basis);
 
         Basis.push_back(NewState);
-        // now the basis size is itr+1
-
-        cout << "itr\t" << itr << "newstate is\t" <<endl<< NewState<<endl;
-        cout << "Energy is " << svm.NewEnergy(Basis, C, D, E, EE) << endl;
+        cout << "Energy is " << svm.NewEnergy() << endl;
         EE = E;
         svm.UpdateNorm(Basis);
         svm.UpdateHamiltonian(Basis);
         itr = itr + 1;
 
     }
+    clock_t end1 = clock();
+    std::cout << "update duration = " << (double)(end1 - start1) / CLOCKS_PER_SEC << "sec.\n";
     return 0;
 }

@@ -1,16 +1,13 @@
-﻿  Solver.cpp
+﻿  SVM.cpp
 C:\Users\harun\source\repos2\Positronium_Ion_Energy_SVM\L2L_I2GA\Eigen\src\Core\arch\Default\Half.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
 C:\Users\harun\source\repos2\Positronium_Ion_Energy_SVM\L2L_I2GA\Eigen\src\Core\arch\Default\BFloat16.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
 C:\Users\harun\source\repos2\Positronium_Ion_Energy_SVM\L2L_I2GA\Eigen\src\Core\arch\Default\GenericPacketMathFunctions.h(676,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-C:\Users\harun\source\repos2\Positronium_Ion_Energy_SVM\L2L_I2GA\Solver.cpp(113,26): warning C4267: '初期化中': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
-  Specimen.cpp
-C:\Users\harun\source\repos2\Positronium_Ion_Energy_SVM\L2L_I2GA\Eigen\src\Core\arch\Default\Half.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-C:\Users\harun\source\repos2\Positronium_Ion_Energy_SVM\L2L_I2GA\Eigen\src\Core\arch\Default\BFloat16.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-C:\Users\harun\source\repos2\Positronium_Ion_Energy_SVM\L2L_I2GA\Eigen\src\Core\arch\Default\GenericPacketMathFunctions.h(676,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-C:\Users\harun\source\repos2\Positronium_Ion_Energy_SVM\L2L_I2GA\Specimen.cpp(43,26): warning C4267: '初期化中': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
-  SpecimenWorkshop.cpp
-C:\Users\harun\source\repos2\Positronium_Ion_Energy_SVM\L2L_I2GA\Eigen\src\Core\arch\Default\Half.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-C:\Users\harun\source\repos2\Positronium_Ion_Energy_SVM\L2L_I2GA\Eigen\src\Core\arch\Default\BFloat16.h(1,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-C:\Users\harun\source\repos2\Positronium_Ion_Energy_SVM\L2L_I2GA\Eigen\src\Core\arch\Default\GenericPacketMathFunctions.h(676,1): warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-  コードを生成中...
+C:\Users\harun\source\repos2\Positronium_Ion_Energy_SVM\L2L_I2GA\SVM.cpp(32,28): warning C4267: '初期化中': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
+C:\Users\harun\source\repos2\Positronium_Ion_Energy_SVM\L2L_I2GA\SVM.cpp(35,17): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\harun\source\repos2\Positronium_Ion_Energy_SVM\L2L_I2GA\SVM.cpp(39,28): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\harun\source\repos2\Positronium_Ion_Energy_SVM\L2L_I2GA\SVM.cpp(64,28): warning C4267: '初期化中': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
+C:\Users\harun\source\repos2\Positronium_Ion_Energy_SVM\L2L_I2GA\SVM.cpp(188,24): warning C4267: '初期化中': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
+C:\Users\harun\source\repos2\Positronium_Ion_Energy_SVM\L2L_I2GA\SVM.cpp(204,24): warning C4267: '初期化中': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
+C:\Users\harun\source\repos2\Positronium_Ion_Energy_SVM\L2L_I2GA\SVM.cpp(219,29): warning C4267: '初期化中': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
+C:\Users\harun\source\repos2\Positronium_Ion_Energy_SVM\L2L_I2GA\SVM.cpp(230,29): warning C4267: '初期化中': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
   L2L_I2GA.vcxproj -> C:\Users\harun\source\repos2\Positronium_Ion_Energy_SVM\x64\Debug\L2L_I2GA.exe

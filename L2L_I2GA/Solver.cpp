@@ -32,7 +32,7 @@ Vector3d Solver::first_state_GAsolve()
 {
 	int count = 0;
 	// Set Current_Proximity to the biggest value
-	Current_Proximity = 1.7976931348623157E+308;
+	Current_Proximity = 1.797E+6;
 	SpecimenWorkshop sw;
 	// Loop while Current_Proximity is not less than the Epsilon
 	while (1)
@@ -94,12 +94,12 @@ Vector3d Solver::first_state_GAsolve()
 
 	}
 }
-void Solver::Initialize(vector<Vector3d>& Basis, MatrixXd C, VectorXd D, double E, double EE)
+void Solver::Initialize(vector<Vector3d>Basis)
 {
 	SpecimenWorkshop sw;
 
 	// Generate initial population
-	Current_Population = sw.GeneratePopulation(Basis, C, D, E, EE);
+	Current_Population = sw.GeneratePopulation(Basis);
 
 	// Set Current_Selection to zero for correct work delete[] operator
 	Current_Selection = 0;
@@ -108,12 +108,12 @@ void Solver::Initialize(vector<Vector3d>& Basis, MatrixXd C, VectorXd D, double 
 }
 
 // Run the algorithm
-Vector3d Solver::GAsolve(vector<Vector3d>& Basis, MatrixXd C, VectorXd D, double E, double EE)
+Vector3d Solver::GAsolve(vector<Vector3d>Basis)
 {
 	int Bsize = Basis.size();
 	int count = 0;
 	// Set Current_Proximity to the biggest value
-	Current_Proximity = 1.7976931348623157E+308;
+	Current_Proximity = 1.797E+6;
 	SpecimenWorkshop sw;
 	// Loop while Current_Proximity is not less than the Epsilon
 	while (1)
@@ -168,9 +168,12 @@ Vector3d Solver::GAsolve(vector<Vector3d>& Basis, MatrixXd C, VectorXd D, double
 			b[2] = f2 + f3;
 			return b;
 			break;
-		}
+		} 
+		clock_t start1 = clock();
 		// Generate new population by reproducing specimens from the selection
-		Current_Population = sw.GeneratePopulation(Current_Selection, Basis, C, D, E, EE);
+		Current_Population = sw.GeneratePopulation(Current_Selection, Basis);
+		clock_t end1 = clock();
+		//std::cout << "generate population duration = " << (double)(end1 - start1) / CLOCKS_PER_SEC << "sec.\n";
 
 		Current_Iteration++;
 		
